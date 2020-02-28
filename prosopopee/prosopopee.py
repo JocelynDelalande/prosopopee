@@ -349,7 +349,7 @@ def get_settings():
     return settings
 
 
-def get_gallery_templates(theme, gallery_path="", parent_templates=None):
+def get_gallery_templates(theme, gallery_path=""):
     theme_path = Path(__file__).parent.joinpath("themes", theme).exists()
 
     available_themes = theme, "', '".join(Path(__file__).parent.joinpath("themes").listdir())
@@ -419,7 +419,7 @@ def process_directory(gallery_name, settings, parent_templates, parent_gallery_p
             # Sub galleries found, create index with them instead of a gallery
             theme = gallery_settings.get("theme", settings.get("theme", "exposure"))
 
-            subgallery_templates = get_gallery_templates(theme, gallery_path, parent_templates)
+            subgallery_templates = get_gallery_templates(theme, gallery_path)
             sub_page_galleries_cover = []
 
             for subgallery in sub_galleries:
