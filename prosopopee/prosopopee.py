@@ -27,7 +27,7 @@ from path import Path
 from jinja2 import Environment, FileSystemLoader
 
 from .cache import CACHE
-from .utils import error, warning, okgreen, makeform, encrypt
+from .utils import error, warning, okgreen, makeform, encrypt, render_text
 
 
 DEFAULTS = {
@@ -628,6 +628,7 @@ def main():
     theme = settings["settings"].get("theme", "exposure")
     templates = get_gallery_templates(theme)
     templates.add_extension('jinja2.ext.with_')
+    templates.filters['render_text'] = render_text
 
     if Path("custom.js").exists():
         shutil.copy(Path("custom.js"), Path(".").joinpath("build", "", "static", "js"))

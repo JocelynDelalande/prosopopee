@@ -24,6 +24,9 @@ You often have an ``image`` key. You need to give it a path to the
 actual file. By convention, those files are put inside your gallery folder but
 this is not mandatory.
 
+Keys requiring to input text (``text``, ``title``, ``sub_title``) allow
+plain-text, but also HTML or MarkDown, depending.
+
 Full Screen picture
 ___________________
 

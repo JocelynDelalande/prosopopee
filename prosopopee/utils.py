@@ -5,7 +5,7 @@ from subprocess import check_output
 
 from path import Path
 
-from jinja2 import Environment, FileSystemLoader
+from jinja2 import Environment, FileSystemLoader, contextfilter
 
 from builtins import str
 
@@ -50,3 +50,52 @@ def encrypt(password, template, gallery_path, settings, gallery_settings):
         gallery=gallery_settings,
     ).encode("Utf-8")
     return html
+
+
+@contextfilter
+def render_text(context, value):
+    """ Renders text, using the propper renderer
+
+    The render choice is up to the user ; could be defined via the
+    `text_renderer` yaml setting, that could be specified at global, gallery,
+    or section level.
+
+    Possible settings are `markdown` or `html` (default).
+    """
+    renderers_map = {
+        'markdown': markdown_renderer,
+        'html': raw_html_renderer,
+    }
+
+    for renderer_name in (
+            context['settings'].get('text_renderer', None),
+            context['gallery'].get('text_renderer', None),
+            context['section'].get('text_renderer', None),
+            'html',
+    ):
+        if renderer_name is not None:
+            try:
+                renderer_func = renderers_map[renderer_name]
+                break
+            except KeyError:
+                error(
+                    'Unknown renderer : "{}" (allowed renderers are {})',format(
+                        renderer_name,
+                        ', '.join(renderers_map.keys())
+                    )
+                )
+    return renderer_func(value)
+
+
+def raw_html_renderer(text):
+    return text
+
+def markdown_renderer(text):
+    try:
+        import markdown as md
+    except ImportError:
+        error("Cannot load the markdown library.")
+        raise TemplateError("Cannot load the markdown library")
+    marked = md.Markdown()
+
+    return marked.convert(text)

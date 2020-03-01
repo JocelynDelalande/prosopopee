@@ -3,7 +3,7 @@
   {% endif %}
   <section class="paragraph">
     {% if section.title %}
-    <h2>{{ section.title }}</h2>
+      <h2>{{ section.title|render_text }}</h2>
     {% else %}
     <div class="separator"></div>
     {% endif %}
@@ -22,17 +22,17 @@
     {% endif %}
     {{ image.copy() }}
     <span class="{{ float }} baguette">
-      <a href="{{ image }}" {% if caption %}data-caption="{{ caption }}"{% endif %}
-         data-at-450="{{ image.generate_thumbnail("x450") }}"
-         data-at-800="{{ image.generate_thumbnail("x800") }}"
-         data-at-1366="{{ image.generate_thumbnail("x1366") }}"
-         data-at-1920="{{ image.generate_thumbnail("x1920") }}"
-         >
-         <img class="lazy" style="width: {{ image_resize }};" src="" data-original="{{ image.generate_thumbnail("x450") }}" alt=""/>
-      </a>
+        <a href="{{ image }}" {% if caption %}data-caption="{{ caption }}"{% endif %}
+           data-at-450="{{ image.generate_thumbnail("x450") }}"
+           data-at-800="{{ image.generate_thumbnail("x800") }}"
+           data-at-1366="{{ image.generate_thumbnail("x1366") }}"
+           data-at-1920="{{ image.generate_thumbnail("x1920") }}"
+        >
+            <img class="lazy" style="width: {{ image_resize }};" src="" data-original="{{ image.generate_thumbnail("x450") }}" alt=""/>
+        </a>
     </span>
     {% endif %}
-    {{ section.text }}
+    {{ section.text|render_text }}
     </p>
     <div class="clear"></div>
   </section>

@@ -6,9 +6,9 @@
   <div class="video-container">
     {% if section.text %}
     <div class="title-container">
-      <div class="headline animated animatedFadeInUp fadeInUp">
-        <h1>{{ section.text.title }}</h1>
-        <h2>{{ section.text.sub_title }}</h2>
+        <div class="headline animated animatedFadeInUp fadeInUp">
+          <h1>{{ section.text.title|render_text }}</h1>
+          <h2>{{ section.text.sub_title|render_text }}</h2>
         {% if section.text.date_end %}
         <div class="datetime">{{ section.text.date.strftime("%d %B %Y") }}  to {{ section.text.date_end.strftime("%d %B %Y") }}</div>
         {% else %}
@@ -31,8 +31,10 @@
   {% if section.text %}
   <div class="picture-text">
     <div class="picture-text-column animated animatedFadeInUp fadeInUp">
-      <h1>{{ section.text.title }}</h1>
-      <h2>{{ section.text.sub_title }}</h2>
+      <h1>{{ section.text.title|render_text }}</h1>
+      {% if section.text.sub_title %}
+      <h2>{{ section.text.sub_title|render_text }}</h2>
+      {% endif %}
       {% if section.text.date_end %}
       <div class="datetime">{{ section.text.date.strftime("%d %B %Y") }}  to {{ section.text.date_end.strftime("%d %B %Y") }}</div>
       {% else %}

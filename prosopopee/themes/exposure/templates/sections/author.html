@@ -4,9 +4,9 @@
   <img src={{ image.generate_thumbnail("80x80") }} alt="" class="circle">
   <div>
     <span class=author-info>Story by
-      <h4>{{ section.name }}</h4>
+      <h4>{{ section.name|render_text }}</h4>
       {% if section.text %}
-      <div class=desc>{{ section.text }}</div>
+      <div class=desc>{{ section.text|render_text }}</div>
       {% endif %}
     </span>
   </div>
